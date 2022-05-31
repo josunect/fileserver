@@ -18,9 +18,9 @@ Go to https://localhost:8443
 
 ## Routes:
 
-/ 
-/list
-/directory
+- / 
+- /list
+- /directory
 
 ## Notes 
 - Go Modules: https://go.dev/doc/tutorial/call-module-code 
