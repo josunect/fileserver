@@ -1,0 +1,18 @@
+#FROM golang:alpine AS build
+#
+#RUN apk add git
+#
+#RUN mkdir /src
+#ADD . /src
+#COPY ../filemanager /src/filemanager
+#
+#WORKDIR /src
+#
+#RUN go build .
+#
+#FROM alpine:edge
+#
+#COPY --from=build . /sbin/httpserver
+#EXPOSE 8443
+#CMD /sbin/httpserver
+
