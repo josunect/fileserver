@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/filemanager"
+	"github.com/fileserver/filemanager"
 	"log"
 	"net/http"
 	"os"
