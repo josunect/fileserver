@@ -10,8 +10,6 @@ import (
 )
 
 var dirName string = "/tmp"
-var crtFile string = "localhost.crt"
-var keyFile string = "localhost.key"
 
 func index(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -86,7 +84,7 @@ func main() {
 	http.HandleFunc("/list", listFiles)
 	http.HandleFunc("/directory", directory)
 
-	err := http.ListenAndServeTLS(":8443", crtFile, keyFile, nil)
+	err := http.ListenAndServe(":6080", nil)
 	if err != nil {
 		fmt.Print(err.Error())
 		return

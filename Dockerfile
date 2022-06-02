@@ -17,5 +17,5 @@ COPY httpserver/go.build.mod ./go.mod
 # Build the binary
 RUN go build .
 
-EXPOSE 8443
+EXPOSE 6080
 CMD ["./httpserver"]
