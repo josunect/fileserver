@@ -5,7 +5,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 3000
+    - port: 5000
       targetPort: 6080
       protocol: TCP
   selector:

@@ -1,18 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: httpserver
+  name: ingress-httpserver
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: httpserver.info
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: web
+                name: httpserver
                 port:
-                  number: 8080
+                  number: 5000

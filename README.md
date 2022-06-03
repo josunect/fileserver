@@ -23,17 +23,29 @@ Go to https://localhost:8443
 - /directory
 
 ## Notes 
-- Go Modules: https://go.dev/doc/tutorial/call-module-code 
+- Go Modules: https://go.dev/doc/tutorial/call-module-code
 
-## Certificate
-- http server uses a localhost.crt and a localhot.key file in the httpserver folder
-- Generated with:
-  - openssl req  -new  -newkey rsa:2048  -nodes  -keyout localhost.key  -out localhost.csr
-  - openssl  x509  -req  -days 365  -in localhost.csr  -signkey localhost.key  -out localhost.crt 
-
-## Podman Imagen
+## Podman Image
 - To build an image:
 podman build -t httpserver .
 - To run the image: 
 podman run -p 8443:8443 --name httpserver localhost/httpserver
 
+## Docker Image
+- To build an image:
+  docker build -t httpserver .
+
+# Kubernetes
+The example has been done for kubernetes and minikube
+- minikube start --driver=docker
+- eval $(minikube docker-env) # use local images created in the docker registry 
+- minikube docker-env
+- kubectl create -f deployment.yaml 
+- kubectl get pods 
+- kubectl describe deployment httpserver
+- kubectl apply -f service.yaml
+- kubectl get svc httpserver
+- minikube service httpserver --url 
+- kubectl apply -f ingress.yaml 
+- kubectl get ingress
+- Access the service in the url provided
