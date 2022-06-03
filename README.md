@@ -49,3 +49,5 @@ The example has been done for kubernetes and minikube
 - kubectl apply -f ingress.yaml 
 - kubectl get ingress
 - Access the service in the url provided
+
+Note: The ingress.yaml is defined for Ingress controller ingress-nginx
