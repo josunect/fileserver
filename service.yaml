@@ -5,8 +5,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 5000
-      targetPort: 6080
+    - name: 8443-tcp
       protocol: TCP
+      port: 5000
+      targetPort: 8443
   selector:
     app: httpserver

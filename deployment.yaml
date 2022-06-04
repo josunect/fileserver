@@ -12,8 +12,17 @@ spec:
       labels:
         app: httpserver
     spec:
+      volumes:
+        - name: service-cert
+          hostPath:
+           path: /tmp
       containers:
         - name: httpserver
-          image: quay.io/rh_ee_jcordoba/myrepo:latest
+          image: quay.io/rh_ee_jcordoba/httpserver:0.3
           ports:
-            - containerPort: 6080
+            - containerPort: 8443
+          volumeMounts:
+            - name: service-cert
+              readOnly: true
+              mountPath: /tmp
+
