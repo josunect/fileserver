@@ -38,16 +38,19 @@ podman run -p 8443:8443 --name httpserver localhost/httpserver
 # Kubernetes
 The example has been done for kubernetes and minikube
 - minikube start --driver=docker
-- eval $(minikube docker-env) # use local images created in the docker registry 
-- minikube docker-env
-- kubectl create -f deployment.yaml 
-- kubectl get pods 
-- kubectl describe deployment httpserver
+
+We need to map the file cert directory: (The image expects a /tmp/mycert.crt and /tmp/mycert.key)
+
+- minikube mount $HOME/data:/tmp
+
+(So we don't need volumne.yaml)
+
+- kubectl create -f deployment.yaml
 - kubectl apply -f service.yaml
-- kubectl get svc httpserver
-- minikube service httpserver --url 
 - kubectl apply -f ingress.yaml 
-- kubectl get ingress
-- Access the service in the url provided
+
+Access the service in the url provided. Access the url minikube ip
+
+https://192.168.59.101/list
 
 Note: The ingress.yaml is defined for Ingress controller ingress-nginx
