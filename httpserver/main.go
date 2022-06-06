@@ -9,9 +9,9 @@ import (
 	"strings"
 )
 
-var dirName string = "/tmp"
-var servercert string = "/tmp/tmp/mycert.crt"
-var keycert string = "/tmp/tmp/mycert.key"
+var dirName string = "/"
+var servercert string = os.Getenv("CERTIFICATE_FILE")
+var keycert string = os.Getenv("CERTIFICATE_KEY")
 
 func index(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -80,11 +80,23 @@ func listFiles(writer http.ResponseWriter, request *http.Request) {
 
 }
 
+func api(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "text/html; charset=utf-8")
+	fmt.Fprintf(writer, "api ")
+}
+
 func main() {
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/list", listFiles)
 	http.HandleFunc("/directory", directory)
+
+	// Frontend: TODO
+	http.HandleFunc("/api", api)
+	// handler
+
+	log.Print("Certificate file: " + servercert)
+	log.Print("Certificate file: " + keycert)
 
 	//err := http.ListenAndServe(":6080", nil)
 	err := http.ListenAndServeTLS(":8443", servercert, keycert, nil)

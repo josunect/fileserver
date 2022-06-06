@@ -15,14 +15,24 @@ spec:
       volumes:
         - name: service-cert
           hostPath:
-           path: /tmp
+           path: /usr/secrets
       containers:
         - name: httpserver
-          image: quay.io/rh_ee_jcordoba/httpserver:0.3
+          image: quay.io/rh_ee_jcordoba/httpserver:0.5
           ports:
             - containerPort: 8443
           volumeMounts:
             - name: service-cert
               readOnly: true
-              mountPath: /tmp
-
+              mountPath: /usr/secrets
+          env:
+            - name: CERTIFICATE_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: httpserver
+                  key: CERTIFICATE_FILE
+            - name: CERTIFICATE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: httpserver
+                  key: CERTIFICATE_KEY

@@ -12,6 +12,9 @@ It is using a module not public, file manager, with go modules.
 
 
 ## Usage: 
+export CERTIFICATE_FILE="$HOME/data/httpserver/mycert.crt"
+export CERTIFICATE_KEY="$HOME/data/httpserver/mycert.key"
+
 go run .
 
 Go to https://localhost:8443
@@ -39,12 +42,13 @@ podman run -p 8443:8443 --name httpserver localhost/httpserver
 The example has been done for kubernetes and minikube
 - minikube start --driver=docker
 
-We need to map the file cert directory: (The image expects a /tmp/mycert.crt and /tmp/mycert.key)
+We need to map the file cert directory: (The image expects a mycert.crt and mycert.key)
 
-- minikube mount $HOME/data:/tmp
+- minikube mount $HOME/data:/usr/secrets
 
 (So we don't need volumne.yaml)
 
+- kubectl create -f configmap.yaml
 - kubectl create -f deployment.yaml
 - kubectl apply -f service.yaml
 - kubectl apply -f ingress.yaml 
@@ -54,3 +58,6 @@ Access the service in the url provided. Access the url minikube ip
 https://192.168.59.101/list
 
 Note: The ingress.yaml is defined for Ingress controller ingress-nginx
+
+# Image releases
+0.5 Use confimap
