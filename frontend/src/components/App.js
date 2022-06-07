@@ -1,10 +1,12 @@
 import Header from '../components/Header';
+import MainSection from "./MainSection";
 
 
 function App() {
   return (
     <div className="App">
-      <Header />
+        <Header />
+        <MainSection />
     </div>
   );
 }
