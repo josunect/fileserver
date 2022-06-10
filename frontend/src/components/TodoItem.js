@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import TodoTextInput from "./TodoTextInput";
 import { style } from 'typestyle';
-import { editTodo, deleteTodo, completeTodo } from "../stores/Todo";
+import { editTodo, deleteTodo, updateTodo } from "../actions/todos";
 
 const todoList = style ({
     listStyle: "none",
@@ -36,7 +36,7 @@ export default class TodoItem extends Component {
                         className="toggle"
                         type="checkbox"
                         checked={todo.completed}
-                        onChange={() => completeTodo(todo.id)}
+                        onChange={() => updateTodo(todo.id)}
                     />
                     <label onDoubleClick={this.handleDoubleClick}>{todo.text}</label>
                     <button className="destroy" onClick={() => deleteTodo(todo.id)} > X </button>

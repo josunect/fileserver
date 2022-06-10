@@ -88,5 +88,5 @@ func Router() {
 	http.HandleFunc("/directory", directory)
 
 	http.HandleFunc("/api", ApiHandler())
-	http.HandleFunc("/todomvc", StaticHandler())
+	http.HandleFunc("/api/todo", TodoHandler())
 }

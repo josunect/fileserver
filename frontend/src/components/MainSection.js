@@ -1,7 +1,6 @@
 import React from "react";
 import Footer from "./Footer";
 import TodoList from "../components/TodoList";
-import {TodoStore} from "../stores/Todo";
 import { style } from 'typestyle';
 
 const newTodo = style ({
@@ -10,8 +9,6 @@ const newTodo = style ({
 })
 
 const MainSection = () => {
-    const todos = TodoStore;
-    const todosCount = todos.todos.length;
 
     return (
         <section className="main">
@@ -22,8 +19,7 @@ const MainSection = () => {
                     placeholder="What needs to be done?"
                 />
             </span>
-            <TodoList
-                list={{todos}}/>
+            <TodoList />
             <Footer />
         </section>
     );
