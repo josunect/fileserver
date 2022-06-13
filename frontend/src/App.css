@@ -51,4 +51,14 @@
   padding: 2px;
   background-color: #282c34;
   border: none;
+  cursor: pointer;
+}
+
+.todoUl li .destroy:hover {
+  font-size: 14px;
+  color: white;
+}
+
+.newTodo {
+  padding: 10px;
 }

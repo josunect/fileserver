@@ -17,6 +17,8 @@ class TodoItem extends Component {
             element: props.todo
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.updateItem = this.updateItem.bind(this);
     }
 
     handleDoubleClick = () => {
@@ -26,11 +28,21 @@ class TodoItem extends Component {
     handleChange = (e) => {
         let item = this.state.element;
         item.completed = e.target.checked;
+        this.updateItem(item.id, item)
+    }
+
+    handleSave = (e) => {
+        if (e.which === 13) {
+            let item = this.state.element;
+            item.text = e.target.value;
+            this.updateItem(item.id, item)
+        }
+    }
+
+    updateItem = (id, item) => {
         this.props.updateTodo(item.id, item).then((data) => {
             this.setState({
-                id: data.id,
-                text: data.text,
-                completed: data.completed,
+                editing: false
             });
             console.log("SUCCESS");
             console.log(data);
@@ -47,10 +59,10 @@ class TodoItem extends Component {
             console.log("SUCCESS");
             console.log(data);
         })
-            .catch((ex) => {
-                console.log("ERROR");
-                console.log(ex);
-            });
+        .catch((ex) => {
+            console.log("ERROR");
+            console.log(ex);
+        });
     }
 
     render() {
@@ -59,10 +71,10 @@ class TodoItem extends Component {
         let element;
         if (this.state.editing) {
             element = (
-                <TodoTextInput
+                <input type="text"
                     text={todo.text}
-                    editing={this.state.editing}
-                    onSave={(text) => this.handleSave(todo.id, text)}
+                    placeholder={todo.text}
+                    onKeyDown={this.handleSave}
                 />
             );
         } else {
@@ -85,10 +97,6 @@ class TodoItem extends Component {
                 {element}
             </li>
         );
-    }
-
-    handleSave(id, text) {
-
     }
 }
 

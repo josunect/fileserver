@@ -71,7 +71,7 @@ func TodoHandler() http.HandlerFunc {
 			}
 			//log.Printf("Post from website! r.PostFrom = %v\n", newTodo)
 
-			newTodo.ID = len(model.Todos) + 1
+			newTodo.ID = GetId()
 
 			model.Todos = append(model.Todos, newTodo)
 			ReturnJson(newTodo, w, 200)
@@ -181,4 +181,15 @@ func ReturnJson(data any, w http.ResponseWriter, code int) {
 
 	w.WriteHeader(code)
 	w.Write(body)
+}
+
+func GetId() int {
+	var max int = 0
+	for _, v := range model.Todos {
+		if v.ID > max {
+			max = v.ID
+		}
+	}
+	max++
+	return max
 }

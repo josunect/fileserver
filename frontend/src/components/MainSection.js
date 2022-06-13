@@ -14,7 +14,7 @@ const MainSection = () => {
     return (
         <section className="main">
             <span>
-                <TodoTextInput  />
+                <TodoTextInput placeholder="Add your new todo" />
             </span>
             <TodoList />
             <Footer />
