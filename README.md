@@ -65,3 +65,9 @@ Note: The ingress.yaml is defined for Ingress controller ingress-nginx
 
 # Image releases
 0.5 Use confimap
+
+# frontend
+React example with:
+- Redux 
+- axios: Promise based HTTP client
+- connect from react redux: Connects a React component to a redux store

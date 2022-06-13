@@ -7,7 +7,7 @@ type TodoItem struct {
 	Completed bool   `json:"completed"`
 }
 
-// albums slice to seed record album data.
+// Todo list
 var Todos = []TodoItem{
 	{ID: 1, Text: "Eat", Completed: true},
 	{ID: 2, Text: "Surf", Completed: false},

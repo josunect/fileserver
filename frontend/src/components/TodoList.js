@@ -47,7 +47,7 @@ class TodoList extends Component {
 
     render() {
         const { todos } = this.props;
-
+        
         const listItems = todos.map((element, i) => {
             return (<TodoItem key={element.text} todo={element}/>);
         });
