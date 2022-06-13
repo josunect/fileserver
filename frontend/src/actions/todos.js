@@ -16,6 +16,7 @@ export const addTodo = (text, completed) => async (dispatch) => {
         });
         return Promise.resolve(res.data);
     } catch (err) {
+        console.log(err)
         return Promise.reject(err);
     }
 };

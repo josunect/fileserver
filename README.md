@@ -19,6 +19,10 @@ go run .
 
 Go to https://localhost:8443
 
+or, to run in dev mode and serve as http:
+
+go run . -env=dev 
+
 ## Routes:
 
 - / 

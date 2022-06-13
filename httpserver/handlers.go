@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -62,15 +63,84 @@ func TodoHandler() http.HandlerFunc {
 			}
 		case "POST":
 
-			if err := req.ParseForm(); err != nil {
-				fmt.Fprintf(w, "ParseForm() err: %v", err)
+			var newTodo model.TodoItem
+			err := json.NewDecoder(req.Body).Decode(&newTodo)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
+			//log.Printf("Post from website! r.PostFrom = %v\n", newTodo)
 
-			name := req.FormValue("name")
-			occupation := req.FormValue("occupation")
+			newTodo.ID = len(model.Todos) + 1
 
-			fmt.Fprintf(w, "%s is a %s\n", name, occupation)
+			model.Todos = append(model.Todos, newTodo)
+			ReturnJson(newTodo, w, 200)
+
+		default:
+			fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
+		}
+
+	}
+}
+
+func TodoIdHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		id := strings.TrimPrefix(req.URL.Path, "/api/todo/")
+		log.Print("API Id Handler " + id)
+		intId, err := strconv.ParseInt(id, 0, 8)
+
+		if err != nil {
+			ReturnJson("Error with ID", w, 400)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		switch req.Method {
+		case "GET":
+
+			for _, s := range model.Todos {
+				if int64(s.ID) == intId {
+					ReturnJson(s, w, 200)
+					return
+				}
+			}
+
+			w.WriteHeader(404)
+
+		case "PUT":
+
+			var newTodo model.TodoItem
+			err := json.NewDecoder(req.Body).Decode(&newTodo)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			found := false
+			for i, v := range model.Todos {
+				if v.ID == newTodo.ID {
+					found = true
+					model.Todos[i] = newTodo
+				}
+			}
+			if found == false {
+				ReturnJson("Error, ID not found", w, 400)
+				return
+			} else {
+				ReturnJson(newTodo, w, 200)
+			}
+		case "DELETE":
+
+			for index, s := range model.Todos {
+				if int64(s.ID) == intId {
+					model.Todos = append(model.Todos[:index], model.Todos[index+1:]...)
+					ReturnJson(s, w, 200)
+					return
+				}
+			}
+
+			w.WriteHeader(404)
 
 		default:
 			fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")

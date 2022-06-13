@@ -89,4 +89,5 @@ func Router() {
 
 	http.HandleFunc("/api", ApiHandler())
 	http.HandleFunc("/api/todo", TodoHandler())
+	http.HandleFunc("/api/todo/", TodoIdHandler())
 }

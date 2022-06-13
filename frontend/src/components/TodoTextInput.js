@@ -1,43 +1,63 @@
 import React, { Component } from 'react'
+import { addTodo } from "../actions/todos";
+import {connect} from "react-redux";
 
+class TodoTextInput extends Component {
 
-export default class TodoTextInput extends Component {
-
-    state = {
-        text: this.props.text || ''
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.newTodo = this.newTodo.bind(this);
+        this.state = {
+            id: null,
+            text: "",
+            completed: false,
+        };
     }
-    newTodo;
 
     handleSubmit = e => {
-        const text = e.target.value.trim()
+
         if (e.which === 13) {
-            this.props.onSave(text)
-            if (this.props.newTodo) {
-                this.setState({ text: '' })
-            }
+            const {text, completed} = this.state;
+            this.props.addTodo(text, completed).then((data) => {
+                    this.setState({
+                        id: data.id,
+                        text: data.text,
+                        completed: data.completed,
+                    });
+                    console.log("SUCCESS");
+                    console.log(data);
+            })
+            .catch((ex) => {
+                console.log("ERROR");
+                console.log(ex);
+           });
         }
     }
 
+    newTodo() {
+        this.setState({
+           id: null,
+           text: "",
+           completed: false
+        });
+    }
     handleChange = e => {
         this.setState({ text: e.target.value })
     }
 
-    handleBlur = e => {
-        if (!this.props.newTodo) {
-            this.props.onSave(e.target.value)
-        }
-    }
-
     render() {
         return (
-            <input className={"todoInput"}
+            <input className={"newTodo"}
                    type="text"
                    placeholder={this.props.placeholder}
                    autoFocus="true"
                    value={this.state.text}
-                   onBlur={this.handleBlur}
                    onChange={this.handleChange}
                    onKeyDown={this.handleSubmit} />
         )
     }
 }
+
+export default connect(null, { addTodo })(TodoTextInput);

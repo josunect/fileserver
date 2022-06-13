@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "./Footer";
 import TodoList from "../components/TodoList";
+import TodoTextInput from "../components/TodoTextInput";
 import { style } from 'typestyle';
 
 const newTodo = style ({
@@ -13,11 +14,7 @@ const MainSection = () => {
     return (
         <section className="main">
             <span>
-                <input
-                    className={newTodo}
-                    type="text"
-                    placeholder="What needs to be done?"
-                />
+                <TodoTextInput  />
             </span>
             <TodoList />
             <Footer />
