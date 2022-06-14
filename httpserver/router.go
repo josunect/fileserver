@@ -83,7 +83,7 @@ func api(writer http.ResponseWriter, request *http.Request) {
 
 func Router() {
 
-	fs := http.FileServer(http.Dir("../frontend/build"))
+	fs := http.FileServer(http.Dir("./build"))
 	http.Handle("/", fs)
 
 	http.HandleFunc("/fileserver/", index)

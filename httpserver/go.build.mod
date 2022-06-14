@@ -1,4 +1,4 @@
-module github.com/httpserver
+module github.com/fileserver/httpserver
 
 go 1.18
 

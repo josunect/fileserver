@@ -11,6 +11,10 @@ WORKDIR /app
 
 # Move files
 COPY httpserver ./
+
+CMD ["cd frontend", "npm run-script build"]
+COPY frontend/build /app/build
+
 # Replace go.mod
 COPY httpserver/go.build.mod ./go.mod
 

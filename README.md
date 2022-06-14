@@ -26,8 +26,9 @@ go run . -env=dev
 ## Routes:
 
 - / 
-- /list
-- /directory
+- /api
+- /fileserver/list
+- /fileserver/directory
 
 ## Notes 
 - Go Modules: https://go.dev/doc/tutorial/call-module-code
@@ -59,15 +60,28 @@ We need to map the file cert directory: (The image expects a mycert.crt and myce
 
 Access the service in the url provided. Access the url minikube ip
 
-https://192.168.59.101/list
+https://192.168.59.101/
+
 
 Note: The ingress.yaml is defined for Ingress controller ingress-nginx
 
 # Image releases
 0.5 Use confimap
+0.8 Added frontend
 
 # frontend
 React example with:
 - Redux 
 - axios: Promise based HTTP client
 - connect from react redux: Connects a React component to a redux store
+
+# development
+## frontend/package.json:
+"proxy": "http://localhost:6080",
+## Run go in http:
+go run . -env dev
+
+# Run packed in development /frontend
+## npm run-script build
+## Update router.go:
+fs := http.FileServer(http.Dir("../frontend/build"))
