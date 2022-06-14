@@ -13,19 +13,19 @@ func index(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	fmt.Fprintf(writer, "<h2> Welcome to this file server! </h2> ")
 	fmt.Fprintf(writer, "Where to go from here? ")
-	fmt.Fprintf(writer, "<ul><li> <a href='/list'>List files </a></li>")
-	fmt.Fprintf(writer, "<li> <a href='/directory'>Change directory </a></li>")
+	fmt.Fprintf(writer, "<ul><li> <a href='/fileserver/list'>List files </a></li>")
+	fmt.Fprintf(writer, "<li> <a href='/fileserver/directory'>Change directory </a></li>")
 	fmt.Fprintf(writer, "</ul>")
 }
 
 func directory(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	fmt.Fprintf(writer, "<h2> Change directory: </h2> ")
-	fmt.Fprintf(writer, "<form action='/list' method='get'> ")
+	fmt.Fprintf(writer, "<form action='/fileserver/list' method='get'> ")
 	fmt.Fprintf(writer, "<input type='text' name='dir' placeholder='/tmp'>")
 	fmt.Fprintf(writer, "<input type='submit' value='Go'>")
 	fmt.Fprintf(writer, "</form>")
-	fmt.Fprintf(writer, "<a href='/list'>Directory list</a>")
+	fmt.Fprintf(writer, "<a href='/fileserver/list'>Directory list</a>")
 }
 
 // List files from a dir
@@ -56,22 +56,22 @@ func listFiles(writer http.ResponseWriter, request *http.Request) {
 				fmt.Fprintf(writer, "<pre> "+string(dat)+"</pre>")
 			}
 
-			fmt.Fprintf(writer, "<a href='/list'>Go Back </a>")
+			fmt.Fprintf(writer, "<a href='/fileserver/list'>Go Back </a>")
 			dirName = oldName
 
 		} else {
 			fmt.Fprintf(writer, "Error getting files from dir. It doesn't look like a correct one?<br>")
-			fmt.Fprintf(writer, "<a href='/directory'>Change directory </a>")
+			fmt.Fprintf(writer, "<a href='/fileserver/directory'>Change directory </a>")
 		}
 
 	} else {
 		fmt.Fprintf(writer, "<ul> ")
 		for _, element := range fileList {
-			fmt.Fprintf(writer, "<li> <a href='/list?dir="+dirName+"/"+element+"'>"+element+"</a></li>")
+			fmt.Fprintf(writer, "<li> <a href='/fileserver/list?dir="+dirName+"/"+element+"'>"+element+"</a></li>")
 		}
 		fmt.Fprintf(writer, "</ul> ")
-		fmt.Fprintf(writer, "<a href='/list?dir="+oldName+"'>Go Back </a> <br>")
-		fmt.Fprintf(writer, "<a href='/directory'>Change directory </a>")
+		fmt.Fprintf(writer, "<a href='/fileserver/list?dir="+oldName+"'>Go Back </a> <br>")
+		fmt.Fprintf(writer, "<a href='/fileserver/directory'>Change directory </a>")
 	}
 
 }
@@ -83,9 +83,12 @@ func api(writer http.ResponseWriter, request *http.Request) {
 
 func Router() {
 
-	http.HandleFunc("/", index)
-	http.HandleFunc("/list", listFiles)
-	http.HandleFunc("/directory", directory)
+	fs := http.FileServer(http.Dir("../frontend/build"))
+	http.Handle("/", fs)
+
+	http.HandleFunc("/fileserver/", index)
+	http.HandleFunc("/fileserver/list", listFiles)
+	http.HandleFunc("/fileserver/directory", directory)
 
 	http.HandleFunc("/api", ApiHandler())
 	http.HandleFunc("/api/todo", TodoHandler())
