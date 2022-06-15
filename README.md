@@ -62,8 +62,9 @@ Access the service in the url provided. Access the url minikube ip
 
 https://192.168.59.101/
 
-
 Note: The ingress.yaml is defined for Ingress controller ingress-nginx
+
+![Deployment](https://github.com/josunect/fileserver/blob/main/doc/Deploy%20in%20k8s.png?raw=true)
 
 # Image releases
 0.5 Use confimap
@@ -87,3 +88,5 @@ go run . -env dev
 ## npm run-script build
 ## Update router.go:
 fs := http.FileServer(http.Dir("../frontend/build"))
+
+![Development Packed](https://github.com/josunect/fileserver/blob/main/doc/Development%20packed.png?raw=true)
