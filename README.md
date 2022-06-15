@@ -82,7 +82,7 @@ React example with:
 ## Run go in http:
 go run . -env dev
 
-![Development](https://github.com/josunect/fileserver/blob/main/doc/Deploy%20in%20k8s.png?raw=true)
+![Development](https://github.com/josunect/fileserver/blob/main/doc/development.png?raw=true)
 
 # Run packed in development /frontend
 ## npm run-script build
