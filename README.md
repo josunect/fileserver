@@ -53,10 +53,12 @@ We need to map the file cert directory: (The image expects a mycert.crt and myce
 
 (So we don't need volumne.yaml)
 
+- kubectl create ns myserver
+- kubectl label namespace myserver istio-injection=enabled --overwrite
 - kubectl create -f configmap.yaml
 - kubectl create -f deployment.yaml
 - kubectl apply -f service.yaml
-- kubectl apply -f ingress.yaml 
+- kubectl apply -f ingress.yaml
 
 Access the service in the url provided. Access the url minikube ip
 
