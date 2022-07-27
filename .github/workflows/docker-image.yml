@@ -14,8 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - id: build-image
+    
     - name: Build the Docker image
+      id: build-image
       env:
         DATE: $(date +%s)
       run: docker build . --file Dockerfile --tag test:$DATE
