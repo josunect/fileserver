@@ -18,7 +18,7 @@ jobs:
     - name: Build the Docker image
       env:
         DATE: $(date +%s)
-      run: docker build . --file Dockerfile --tag httpserver:$DATE
+      run: docker build . --file Dockerfile --tag test:$DATE
     
     - name: Push To quay.io
       id: push-to-quay
