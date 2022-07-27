@@ -19,7 +19,7 @@ jobs:
       id: build-image
       env:
         DATE: $(date +%s)
-      run: docker build . --file Dockerfile --tag test:$DATE
+      run: docker build . --file Dockerfile --tag test
     
     - name: Push To quay.io
       id: push-to-quay
