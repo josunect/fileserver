@@ -15,7 +15,7 @@ COPY httpserver ./
 COPY frontend frontend
 RUN apk add --update nodejs npm
 WORKDIR /app/frontend
-RUN ls -la
+RUN npm install react-scripts
 RUN npm run-script build
 WORKDIR /app
 RUN mv frontend/build .
