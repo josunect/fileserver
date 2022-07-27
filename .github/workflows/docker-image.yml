@@ -19,13 +19,13 @@ jobs:
       id: build-image
       env:
         DATE: $(date +%s)
-      run: docker build . --file Dockerfile --tag test:v1
+      run: docker build . --file Dockerfile --tag test
     
     - name: Push To quay.io
       id: push-to-quay
       uses: redhat-actions/push-to-registry@v2
       with:
-        image: test:v1
+        image: test
         registry: quay.io/rh_ee_jcordoba
         username: rh_ee_jcordoba
         password: ${{ secrets.REGISTRY_PASSWORD }}
