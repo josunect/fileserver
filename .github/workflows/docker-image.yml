@@ -29,3 +29,6 @@ jobs:
         registry: quay.io/rh_ee_jcordoba
         username: rh_ee_jcordoba
         password: ${{ secrets.REGISTRY_PASSWORD }}
+        
+    - name: Print image url
+      run: echo "Image pushed to ${{ steps.push-to-quay.outputs.registry-paths }}"
