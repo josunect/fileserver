@@ -12,11 +12,14 @@ WORKDIR /app
 # Move files
 COPY httpserver ./
 
-CMD ["cd frontend", "npm run-script build"]
+COPY frontend frontend
+RUN apk add --update nodejs npm
+WORKDIR /app/frontend
 RUN ls -la
-CMD ["cd .."]
-RUN ls -la
-COPY frontend/build /app/build
+RUN npm run-script build
+WORKDIR /app
+RUN mv frontend/build .
+RUN rm -r frontend
 
 # Replace go.mod
 COPY httpserver/go.build.mod ./go.mod
