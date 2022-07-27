@@ -13,6 +13,7 @@ WORKDIR /app
 COPY httpserver ./
 
 CMD ["cd frontend", "npm run-script build"]
+RUN ls -la
 COPY frontend/build /app/build
 
 # Replace go.mod
