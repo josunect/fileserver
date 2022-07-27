@@ -14,5 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - id: build-image
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag httpserver:$(date +%s)
+      env:
+        DATE: $(date +%s)
+      run: docker build . --file Dockerfile --tag httpserver:$DATE
+    
+    - name: Push To quay.io
+      id: push-to-quay
+      uses: redhat-actions/push-to-registry@v2
+      with:
+        image: ${{ steps.build-image.outputs.image }}
+        tags: ${{ steps.build-image.outputs.tags }}
+        registry: quay.io/rh_ee_jcordoba
+        username: rh_ee_jcordoba
+        password: ${{ secrets.REGISTRY_PASSWORD }}
