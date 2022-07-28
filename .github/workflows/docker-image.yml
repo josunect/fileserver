@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "main" ]
     paths:
-    - filemanager
+    - filemanager/**
   pull_request:
     branches: [ "main" ]
     paths:
-    - filemanager
+    - filemanager/**
 
 jobs:
 
