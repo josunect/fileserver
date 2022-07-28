@@ -1,1 +1,1 @@
-Example Go module used by http server manager.
+Go module used by http server manager.
